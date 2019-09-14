@@ -26,7 +26,8 @@ import { existsSync, writeFileSync, readFileSync } from 'fs';
 import { Peripheral } from 'raspi-peripheral';
 import { ILEDModule, ILED } from 'j5-io-types';
 
-const hasLed = existsSync('/sys/class/leds/led0') &&
+const hasLed =
+  existsSync('/sys/class/leds/led0') &&
   existsSync('/sys/class/leds/led0/trigger') &&
   existsSync('/sys/class/leds/led0/brightness');
 
@@ -34,7 +35,6 @@ export const OFF = 0;
 export const ON = 1;
 
 export class LED extends Peripheral implements ILED {
-
   constructor() {
     super([]);
     if (hasLed) {
@@ -55,14 +55,13 @@ export class LED extends Peripheral implements ILED {
 
   public write(value: 0 | 1): void {
     this.validateAlive();
-    if ([ ON, OFF ].indexOf(value) === -1) {
+    if ([ON, OFF].indexOf(value) === -1) {
       throw new Error(`Invalid LED value ${value}`);
     }
     if (hasLed) {
       writeFileSync('/sys/class/leds/led0/brightness', value ? '1' : '0');
     }
   }
-
 }
 
 export const module: ILEDModule = {
