@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-expression */
 /* eslint-disable no-new */
-import { writeFileSync, readFileSync, existsSync } from 'fs';
+import { writeFileSync, readFileSync } from 'fs';
 import { LED, ON, OFF, module } from '.';
 
 jest.mock('fs');
