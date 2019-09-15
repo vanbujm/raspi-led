@@ -4,7 +4,10 @@ jobs:
       install:
         - yarn
       language: node_js
-      node_js: '12'
+      node_js:
+      - '12'
+      - '10'
+      - '8'
       script:
         - yarn test:ci
       cache:
