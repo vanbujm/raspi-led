@@ -12,14 +12,17 @@ let ON: any;
 let OFF: any;
 let module: any;
 
+const BRIGHTNESS_FILE = '/sys/class/leds/led0/brightness';
+const TRIGGER_FILE = '/sys/class/leds/led0/trigger';
+
 beforeEach(() => {
   // @ts-ignore
   writeFileSync.mockClear();
   // @ts-ignore
   readFileSync.mockClear();
 
-  fs.closeSync(fs.openSync(sysToMocksReplace('/sys/class/leds/led0/brightness'), 'w'));
-  fs.closeSync(fs.openSync(sysToMocksReplace('/sys/class/leds/led0/trigger'), 'w'));
+  fs.closeSync(fs.openSync(sysToMocksReplace(BRIGHTNESS_FILE), 'w'));
+  fs.closeSync(fs.openSync(sysToMocksReplace(TRIGGER_FILE), 'w'));
 
   // This module runs file checks on module load so we need to require it after we mock out the led0 files
   // eslint-disable-next-line global-require
@@ -31,15 +34,15 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  fs.unlinkSync(sysToMocksReplace('/sys/class/leds/led0/trigger'));
-  fs.unlinkSync(sysToMocksReplace('/sys/class/leds/led0/brightness'));
+  fs.unlinkSync(sysToMocksReplace(TRIGGER_FILE));
+  fs.unlinkSync(sysToMocksReplace(BRIGHTNESS_FILE));
 });
 
 describe('LED', () => {
   describe('constructor', () => {
     it('initiates led0 trigger file with "none"', () => {
       new LED();
-      expect(readFileSync('/sys/class/leds/led0/trigger').toString()).toEqual('none');
+      expect(readFileSync(TRIGGER_FILE).toString()).toEqual('none');
     });
   });
 
@@ -53,7 +56,7 @@ describe('LED', () => {
   describe('read', () => {
     it('returns ON when brightness file is an int greater than 1', () => {
       // @ts-ignore
-      writeFileSync('/sys/class/leds/led0/brightness', ON);
+      writeFileSync(BRIGHTNESS_FILE, ON);
 
       const statusLed = new LED();
 
@@ -61,7 +64,7 @@ describe('LED', () => {
     });
 
     it('returns OFF when brightness file is 0', () => {
-      writeFileSync('/sys/class/leds/led0/brightness', OFF);
+      writeFileSync(BRIGHTNESS_FILE, OFF);
 
       const statusLed = new LED();
 
@@ -75,11 +78,11 @@ describe('LED', () => {
 
       statusLed.write(ON);
 
-      expect(readFileSync('/sys/class/leds/led0/brightness').toString()).toEqual(ON.toString());
+      expect(readFileSync(BRIGHTNESS_FILE).toString()).toEqual(ON.toString());
 
       statusLed.write(OFF);
 
-      expect(readFileSync('/sys/class/leds/led0/brightness').toString()).toEqual(OFF.toString());
+      expect(readFileSync(BRIGHTNESS_FILE).toString()).toEqual(OFF.toString());
     });
 
     it('throws an error if the brightness value is not 1 or 0', () => {
