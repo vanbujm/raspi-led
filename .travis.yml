@@ -4,4 +4,8 @@ node_js:
   - '10'
   - '8'
 cache: yarn
-script: yarn test:ci
+services:
+  - docker
+script:
+  - yarn test:ci
+  - ./bin/docker-test.sh
