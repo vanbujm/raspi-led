@@ -2,6 +2,9 @@
 
 set -uo pipefail
 
+node --version
+node --version | grep -o -e '[0-9][0-9].[0-9][0-9]'
+
 BALENA_IMG=balenalib/raspberrypi3-node:$(node --version | grep -o -e '[0-9][0-9].[0-9][0-9]')
 echo "Pulling image: $BALENA_IMG"
 
