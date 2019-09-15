@@ -2,10 +2,6 @@
 
 set -uo pipefail
 
-node --version
-node --version | grep -o -e '[0-9][0-9].[0-9][0-9]'
-
-BALENA_IMG=balenalib/raspberrypi3-node:$(node --version | grep -o -e '[0-9][0-9].[0-9][0-9]')
-echo "Pulling image: $BALENA_IMG"
-docker pull "$BALENA_IMG"
-docker run --rm --privileged -v "$(pwd)":/usr/app -w /usr/app "$BALENA_IMG" /usr/bin/qemu-arm-static /bin/sh -c "resin-xbuild && yarn && yarn test:ci && resin-xbuild"
+export BALENA_IMG=balenalib/raspberrypi3-node:$(node --version | grep -o -e '[0-9][0-9].[0-9][0-9]')
+export YARN_CACHE_DIR=$(yarn cache dir)
+docker build -t vanbujm/raspi-led-build:latest --build-arg BALENA_IMG="$BALENA_IMG" .
