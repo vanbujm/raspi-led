@@ -1,0 +1,13 @@
+jobs:
+  include:
+    - stage: test-64
+      install:
+        - yarn
+      language: node_js
+      node_js: '12'
+      script:
+        - yarn test:ci
+      cache:
+        yarn: true
+stages:
+  - test-64
