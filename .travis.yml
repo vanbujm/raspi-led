@@ -1,16 +1,12 @@
-jobs:
+matrix:
   include:
-    - stage: test-64
-      install:
-        - yarn
-      language: node_js
-      node_js:
-      - '12'
-      - '10'
-      - '8'
-      script:
-        - yarn test:ci
-      cache:
-        yarn: true
-stages:
-  - test-64
+    - language: node_js
+      node_js: '12'
+      cache: yarn
+    - language: node_js
+      node_js: '10'
+      cache: yarn
+    - language: node_js
+      node_js: '18'
+      cache: yarn
+script: yarn test:ci
