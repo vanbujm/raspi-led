@@ -1,6 +1,5 @@
 ARG BALENA_IMG=balenalib/raspberrypi3-debian-node
 FROM $BALENA_IMG
-RUN echo "got here"
 RUN [ "cross-build-start" ]
 
 WORKDIR /usr/app
