@@ -1,24 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { PathLike, WriteFileOptions } from 'fs';
 
-interface IWriteTracker {
-  [key: string]: any;
-}
+const fs = jest.requireActual('fs');
 
-export const writeTracker: IWriteTracker = {};
+const { existsSync: existsSyncActual, writeFileSync: writeFileSyncActual, readFileSync: readFileSyncActual } = fs;
 
-export const existsSync = jest.fn((path: PathLike): boolean => true);
+export const sysToMocksReplace = (path: PathLike | number) => path.toString().replace('/sys/class/leds', '__mocks__');
+
+export const existsSync = jest.fn((path: PathLike): boolean => existsSyncActual(sysToMocksReplace(path)));
 
 type writeFileSyncArgs = [PathLike | number, any, WriteFileOptions];
 
-export const writeFileSync = jest.fn<void, writeFileSyncArgs>((path, data): void => {
-  writeTracker[path.toString()] = data.toString();
-});
+export const writeFileSync = jest.fn<void, writeFileSyncArgs>((path, data): void =>
+  writeFileSyncActual(sysToMocksReplace(path), data)
+);
 
-export const readFileSync = jest.fn(
-  (path: PathLike | number, options?: { encoding?: string | null; flag?: string } | string | null): string | Buffer => {
-    return writeTracker[path.toString()];
-  }
+export const readFileSync = jest.fn((path: PathLike | number): string | Buffer =>
+  readFileSyncActual(sysToMocksReplace(path))
 );
 
 export default { existsSync, writeFileSync, readFileSync };
