@@ -86,8 +86,7 @@
     ]
   },
   "scripts": {
-    "prebuild": "tslint 'src/**/*.ts'",
-    "build": "tsc",
+    "build": "babel src --out-dir dist --extensions '.ts' --source-maps",
     "test": "cross-env RASPI_IO_TEST_MODE=true jest --watchAll",
     "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
     "test:mutation": "stryker run",

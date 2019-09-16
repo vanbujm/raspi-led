@@ -1,4 +1,14 @@
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.module = exports.LED = exports.ON = exports.OFF = void 0;
+
+var _fs = require("fs");
+
+var _raspiPeripheral = require("raspi-peripheral");
+
 /*
 The MIT License (MIT)
 
@@ -22,44 +32,53 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = require("fs");
-const raspi_peripheral_1 = require("raspi-peripheral");
-const hasLed = fs_1.existsSync('/sys/class/leds/led0') &&
-    fs_1.existsSync('/sys/class/leds/led0/trigger') &&
-    fs_1.existsSync('/sys/class/leds/led0/brightness');
-exports.OFF = 0;
-exports.ON = 1;
-class LED extends raspi_peripheral_1.Peripheral {
-    constructor() {
-        super([]);
-        if (hasLed) {
-            fs_1.writeFileSync('/sys/class/leds/led0/trigger', 'none');
-        }
+const hasLed = (0, _fs.existsSync)('/sys/class/leds/led0') && (0, _fs.existsSync)('/sys/class/leds/led0/trigger') && (0, _fs.existsSync)('/sys/class/leds/led0/brightness');
+const OFF = 0;
+exports.OFF = OFF;
+const ON = 1;
+exports.ON = ON;
+
+class LED extends _raspiPeripheral.Peripheral {
+  constructor() {
+    super([]);
+
+    if (hasLed) {
+      (0, _fs.writeFileSync)('/sys/class/leds/led0/trigger', 'none');
     }
-    hasLed() {
-        return hasLed;
+  }
+
+  hasLed() {
+    return hasLed;
+  }
+
+  read() {
+    if (hasLed) {
+      return parseInt((0, _fs.readFileSync)('/sys/class/leds/led0/brightness').toString(), 10) ? ON : OFF;
     }
-    read() {
-        if (hasLed) {
-            return parseInt(fs_1.readFileSync('/sys/class/leds/led0/brightness').toString(), 10) ? exports.ON : exports.OFF;
-        }
-        return exports.OFF;
+
+    return OFF;
+  }
+
+  write(value) {
+    this.validateAlive();
+
+    if ([ON, OFF].indexOf(value) === -1) {
+      throw new Error(`Invalid LED value ${value}`);
     }
-    write(value) {
-        this.validateAlive();
-        if ([exports.ON, exports.OFF].indexOf(value) === -1) {
-            throw new Error(`Invalid LED value ${value}`);
-        }
-        if (hasLed) {
-            fs_1.writeFileSync('/sys/class/leds/led0/brightness', value ? '1' : '0');
-        }
+
+    if (hasLed) {
+      (0, _fs.writeFileSync)('/sys/class/leds/led0/brightness', value ? '1' : '0');
     }
+  }
+
 }
+
 exports.LED = LED;
-exports.module = {
-    createLED() {
-        return new LED();
-    }
+const _module = {
+  createLED() {
+    return new LED();
+  }
+
 };
+exports.module = _module;
 //# sourceMappingURL=index.js.map
