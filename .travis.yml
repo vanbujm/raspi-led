@@ -28,14 +28,16 @@ jobs:
     script: yarn lint:ci && yarn test:ci
     node_js: '8'
 
-  - stage: test arm
+  - stage: advanced tests
+    name: arm test
     node_js: '10'
     services:
     - docker
     script:
     - "./bin/docker-test.sh"
 
-  - stage: mutation test
+  - stage: advanced tests
+    name: mutation test
     script: yarn test:mutation
     node_js: '10'
 
@@ -46,8 +48,7 @@ stages:
 - prepare cache
 - audit
 - test
-- test arm
-- mutation test
+- advanced tests
 - name: release
   if: branch = master
 env:
