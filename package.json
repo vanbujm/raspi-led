@@ -36,6 +36,10 @@
     "@babel/preset-typescript": "^7.6.0",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
+    "@stryker-mutator/babel-transpiler": "^2.1.0",
+    "@stryker-mutator/core": "^2.1.0",
+    "@stryker-mutator/jest-runner": "^2.1.0",
+    "@stryker-mutator/typescript": "^2.1.0",
     "@types/jest": "^24.0.18",
     "@types/node": "^10.12.12",
     "@types/raspi-peripheral": "^2.0.0",
@@ -85,6 +89,7 @@
     "build": "tsc",
     "test": "cross-env RASPI_IO_TEST_MODE=true jest --watchAll",
     "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
+    "test:mutation": "stryker run",
     "lint": "eslint src/**/*.ts --fix",
     "lint:ci": "eslint src/**/*.ts"
   }

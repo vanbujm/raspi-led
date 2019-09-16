@@ -1,39 +1,53 @@
 language: node_js
 cache: yarn
 jobs:
+  allow_failures:
+  - stage: mutation test
+
   include:
-    - stage: prepare cache
-      script: true
-      node_js: '12.9'
-    - stage: prepare cache
-      script: true
-      node_js: '10'
-    - stage: prepare cache
-      script: true
-      node_js: '8'
+  - stage: prepare cache
+    script: true
+    node_js: '12.9'
+  - stage: prepare cache
+    script: true
+    node_js: '10'
+  - stage: prepare cache
+    script: true
+    node_js: '8'
 
-    - stage: audit
-      script: yarn audit
-      node_js: '10'
+  - stage: audit
+    script: yarn audit
+    node_js: '10'
 
-    - stage: test
-      script: yarn lint:ci && yarn test:ci
-      node_js: '12.9'
-    - stage: test
-      script: yarn lint:ci && yarn test:ci && codecov
-      node_js: '10'
-    - stage: test
-      script: yarn lint:ci && yarn test:ci
-      node_js: '8'
+  - stage: test
+    script: yarn lint:ci && yarn test:ci
+    node_js: '12.9'
+  - stage: test
+    script: yarn lint:ci && yarn test:ci && codecov
+    node_js: '10'
+  - stage: test
+    script: yarn lint:ci && yarn test:ci
+    node_js: '8'
 
-    - stage: test arm
-      node_js: '10'
-      services:
-        - docker
-      script:
-        - ./bin/docker-test.sh
+  - stage: test arm
+    node_js: '10'
+    services:
+    - docker
+    script:
+    - "./bin/docker-test.sh"
+
+  - stage: mutation test
+    script: yarn test:mutation
+    node_js: '10'
+
 stages:
-  - prepare cache
-  - audit
-  - test
-  - test arm
+- prepare cache
+- audit
+- test
+- test arm
+- mutation test
+
+env:
+  global:
+  - secure: DVoPisdboLpckWWL6jgHiGlttrAMzGzyjsyYVMPNV8/FBXRIvXzQPl/t2NtQ9L0m3ug4kj3iET7dR9F2FXN5puG3ouceGTXlcIEUt7Y1qK78eCBoi4WIPRGVEcYCA+JYJBp95oQuJcH0WHGPLLuxycHPdjg+eWJr5FHdrvWmdqMTrsqxbqfLjwmQqDYVqA20neTecVOz3f2I0O6aBBucyKESh/wczGXGtMUkP+U0Fzb8lZ2tsDTqTuTfW4wEuSQvD/KGI/c3k4caG/o1jgMgSBMYQKis2emJNuSTNYQ6rxuLGfYJWnkRbWHSb3KbfESKHaL+X9xXvYJ91zwSDcFwNJKce6iRgrM8cK80rOAhOjLwDDTCLIpX2Oiok4cxyz9YxuEzrDQmUasV/gl/pyXtxBSAzi5vCkpTsfx2M4fqxnLfFGQeBYx9Cb9JclrILR1El22ylh01NrmEeDSE3LUNVJA2/reSm2AI74jXn12DfSRbn2pzd8G+pJIpDePlMiIXQhVoH68hqZWr7qE7yz/vB0S5v5AcWvqw0WlCRZz3J55u4Rf/2a72hHmFgwoYRyNU12VJowx15flL5spam0hawLDX46haY1qFUXpUnv2GtN+4s5cYNHATIA5Wt0XTJZ/bQ09TzKwCXwyu2y9GBTFSzrf+lLKvKhaH3Qdp28Jnh1M=
+  - secure: mLQFnU+g4m/C7cRm55GCXVyJSOrvR90tGR0m6bV+HSzkNA3nJ9Y9jmAS7sEck0zTK2d9Po/vWlY+9nPGxfa042648bmeeLHgRrrJ+XDrKlH1r7xj6XV9/JOIuDx2fEv0QQdz3PAAdThZil74TKFfbc30WwB7QFUimMx8Fyjvg2fW0tF6YxBBIjfBPPmizbc/+7vTPmrHWHFyTZG+vHLJ4vuFKQEFSA8gIA6XjRRFhNB7Cply3Vfsezol2sbSajErW1rBkj3l47HhXQvlRlfwbi6cPIpePkMGO4VTF9BQD6QNhq48M+Xih3LGnELR8+D44PS2SBsX/KBMjtWL8srtxF8jodSRg4Q5hmYz955yxr2faCGPVFOngOuqE3Wm0Dln/VHfCkMcBR92UmUA2KzOcguuq6S6hIGhtlU6Tlj0C8c11mdbJoXTVN6ULhLS1jKm+CRXH9uqRVYqpICMlpfwtrBCwQBeN/XMbw+oHgiBRsfBIN3V0BCjFpRsMOHI5YhNMksnARnwioWGPQZDpLqqQ1z5/rDG8e3tkpl/40VYTTRHeaiqR3cVsBgyPkUxnY1swvCBDYc6mKQFMaJDFUHhkKxsvgG5kGnMZsXPN/9KfMi1XuC9Im5cb2mDoroR7PkOo5OGuzUUuN4z02VBxAs9dJZ3Z80RgGnBMg09trlwDBA=
