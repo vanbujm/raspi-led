@@ -6,8 +6,10 @@ Raspi LED
 [![codecov](https://codecov.io/gh/vanbujm/raspi-led/branch/master/graph/badge.svg)](https://codecov.io/gh/vanbujm/raspi-led)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/vanbujm/raspi-led/master)](https://stryker-mutator.github.io)
 
+**---NOTE---** 
+
 This is a fork of [raspi-led](https://github.com/nebrius/raspi-led) where 
-I have added a bunch of automation and ci stuff for my own learning learning. Please actually use the real repo.
+I have added a bunch of automation and ci stuff for my own learning. Please actually use the real repo.
 
 
 Raspi LED is part of the [Raspi.js suite](https://github.com/nebrius/raspi) that provides access to the onboard status LED.
