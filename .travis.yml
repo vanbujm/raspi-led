@@ -16,7 +16,7 @@ jobs:
       script: yarn lint:ci && yarn test:ci
       node_js: '12.9'
     - stage: test
-      script: yarn lint:ci && yarn test:ci
+      script: yarn lint:ci && yarn test:ci && codecov
       node_js: '10'
     - stage: test
       script: yarn lint:ci && yarn test:ci
