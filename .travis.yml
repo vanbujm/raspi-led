@@ -6,13 +6,13 @@ jobs:
       script: true
       node_js: '10'
 
-    - stage: lint
+    - stage: test
       script: yarn lint:ci && yarn test:ci
       node_js: '12.9'
-    - stage: lint
+    - stage: test
       script: yarn lint:ci && yarn test:ci
       node_js: '10'
-    - stage: lint
+    - stage: test
       script: yarn lint:ci && yarn test:ci
       node_js: '8'
 
