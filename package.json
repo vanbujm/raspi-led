@@ -79,6 +79,7 @@
     "build": "tsc",
     "test": "cross-env RASPI_IO_TEST_MODE=true jest --watchAll",
     "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
-    "lint": "eslint src/**/*.ts --fix"
+    "lint": "eslint src/**/*.ts --fix",
+    "lint:ci": "eslint src/**/*.ts"
   }
 }

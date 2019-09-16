@@ -7,5 +7,4 @@ cache: yarn
 services:
   - docker
 script:
-  - yarn test:ci
-  - ./bin/docker-test.sh
+  - yarn lint:ci && yarn test:ci && ./bin/docker-test.sh
