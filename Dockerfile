@@ -6,11 +6,9 @@ RUN [ "cross-build-start" ]
 WORKDIR /usr/app
 # Copy package first because it will help with caching
 COPY package.json ./package.json
-
-ENV YARN_CACHE_DIR $YARN_CACHE_DIR
-
-COPY $YARN_CACHE_DIR /yarn-cache
-RUN yarn --cache-folder /yarn-cache
+COPY .yarnrc ./.yarnrc
+COPY yarn-cache ./yarn-cache
+RUN yarn
 
 COPY . ./
 
