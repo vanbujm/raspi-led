@@ -1,7 +1,5 @@
 language: node_js
-cache:
-  directories:
-    - yarn-cache
+cache: yarn
 jobs:
   allow_failures:
     - stage: mutation test
