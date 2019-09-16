@@ -20,7 +20,9 @@
     "raspberry pi"
   ],
   "author": "Bryan Hughes <bryan@nebri.us>",
-  "contributors": ["Jonathan Van Buren <vanbujm@gmail.com>"],
+  "contributors": [
+    "Jonathan Van Buren <vanbujm@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nebrius/raspi-led/issues"
@@ -58,7 +60,8 @@
     "lint-staged": ">=8",
     "prettier": "^1.18.2",
     "tslint": "^5.11.0",
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.1",
+    "semantic-release": "^15.13.24"
   },
   "jest": {
     "coverageThreshold": {
@@ -91,6 +94,7 @@
     "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
     "test:mutation": "stryker run",
     "lint": "eslint src/**/*.ts --fix",
-    "lint:ci": "eslint src/**/*.ts"
+    "lint:ci": "eslint src/**/*.ts",
+    "semantic-release": "semantic-release"
   }
 }
