@@ -4,6 +4,27 @@
   "description": "Provides access to status LED on the Raspberry Pi as part of the Raspi.js library suite",
   "main": "dist/index.js",
   "types": "./declarations/index.d.ts",
+  "engines": {
+    "node": ">= 6.0.0"
+  },
+  "cpu": [
+    "arm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nebrius/raspi-led.git"
+  },
+  "keywords": [
+    "nodebots",
+    "robotics",
+    "raspberry pi"
+  ],
+  "author": "Bryan Hughes <bryan@nebri.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nebrius/raspi-led/issues"
+  },
+  "homepage": "https://github.com/nebrius/raspi-led",
   "dependencies": {
     "j5-io-types": "^2.4.0",
     "raspi-peripheral": "^3.0.3"
@@ -31,34 +52,16 @@
     "tslint": "^5.11.0",
     "typescript": "^3.2.1"
   },
-  "engines": {
-    "node": ">= 6.0.0"
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   },
-  "cpu": [
-    "arm"
-  ],
-  "scripts": {
-    "prebuild": "tslint 'src/**/*.ts'",
-    "build": "tsc",
-    "test": "cross-env RASPI_IO_TEST_MODE=true jest --watchAll",
-    "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
-    "lint": "eslint src/**/*.ts --fix"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nebrius/raspi-led.git"
-  },
-  "keywords": [
-    "nodebots",
-    "robotics",
-    "raspberry pi"
-  ],
-  "author": "Bryan Hughes <bryan@nebri.us>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nebrius/raspi-led/issues"
-  },
-  "homepage": "https://github.com/nebrius/raspi-led",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
@@ -70,5 +73,12 @@
       "eslint --fix",
       "git add"
     ]
+  },
+  "scripts": {
+    "prebuild": "tslint 'src/**/*.ts'",
+    "build": "tsc",
+    "test": "cross-env RASPI_IO_TEST_MODE=true jest --watchAll",
+    "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
+    "lint": "eslint src/**/*.ts --fix"
   }
 }
