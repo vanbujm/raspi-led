@@ -40,7 +40,7 @@ jobs:
     node_js: '10'
 
   - stage: release
-    node_js: lts/*
+    node_js: '10'
     deploy:
       provider: script
       skip_cleanup: true
