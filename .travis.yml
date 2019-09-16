@@ -2,58 +2,63 @@ language: node_js
 cache: yarn
 jobs:
   allow_failures:
-  - stage: mutation test
+    - stage: mutation test
   include:
-  - stage: prepare cache
-    script: true
-    node_js: '12.9'
-  - stage: prepare cache
-    script: true
-    node_js: '10'
-  - stage: prepare cache
-    script: true
-    node_js: '8'
+    - stage: prepare cache
+      script: true
+      node_js: '12.9'
+    - stage: prepare cache
+      script: true
+      node_js: '10'
+    - stage: prepare cache
+      script: true
+      node_js: '8'
 
-  - stage: audit
-    script: yarn audit
-    node_js: '10'
+    - stage: audit
+      script: yarn audit
+      node_js: '10'
 
-  - stage: test
-    script: yarn lint:ci && yarn test:ci
-    node_js: '12.9'
-  - stage: test
-    script: yarn lint:ci && yarn test:ci && codecov
-    node_js: '10'
-  - stage: test
-    script: yarn lint:ci && yarn test:ci
-    node_js: '8'
+    - stage: test
+      script: yarn lint:ci && yarn test:ci
+      node_js: '12.9'
+    - stage: test
+      script: yarn lint:ci && yarn test:ci && codecov
+      node_js: '10'
+      env:
+        # codecov
+        - secure: mLQFnU+g4m/C7cRm55GCXVyJSOrvR90tGR0m6bV+HSzkNA3nJ9Y9jmAS7sEck0zTK2d9Po/vWlY+9nPGxfa042648bmeeLHgRrrJ+XDrKlH1r7xj6XV9/JOIuDx2fEv0QQdz3PAAdThZil74TKFfbc30WwB7QFUimMx8Fyjvg2fW0tF6YxBBIjfBPPmizbc/+7vTPmrHWHFyTZG+vHLJ4vuFKQEFSA8gIA6XjRRFhNB7Cply3Vfsezol2sbSajErW1rBkj3l47HhXQvlRlfwbi6cPIpePkMGO4VTF9BQD6QNhq48M+Xih3LGnELR8+D44PS2SBsX/KBMjtWL8srtxF8jodSRg4Q5hmYz955yxr2faCGPVFOngOuqE3Wm0Dln/VHfCkMcBR92UmUA2KzOcguuq6S6hIGhtlU6Tlj0C8c11mdbJoXTVN6ULhLS1jKm+CRXH9uqRVYqpICMlpfwtrBCwQBeN/XMbw+oHgiBRsfBIN3V0BCjFpRsMOHI5YhNMksnARnwioWGPQZDpLqqQ1z5/rDG8e3tkpl/40VYTTRHeaiqR3cVsBgyPkUxnY1swvCBDYc6mKQFMaJDFUHhkKxsvgG5kGnMZsXPN/9KfMi1XuC9Im5cb2mDoroR7PkOo5OGuzUUuN4z02VBxAs9dJZ3Z80RgGnBMg09trlwDBA=
+    - stage: test
+      script: yarn lint:ci && yarn test:ci
+      node_js: '8'
 
-  - stage: advanced tests
-    name: arm test
-    node_js: '10'
-    services:
-    - docker
-    script:
-    - "./bin/docker-test.sh"
+    - stage: advanced tests
+      name: arm test
+      node_js: '10'
+      services:
+        - docker
+      script:
+        - "./bin/docker-test.sh"
 
-  - stage: advanced tests
-    name: mutation test
-    script: yarn test:mutation
-    node_js: '10'
+    - stage: advanced tests
+      name: mutation test
+      script: yarn test:mutation
+      node_js: '10'
+      env:
+        # stryker
+        - secure: DVoPisdboLpckWWL6jgHiGlttrAMzGzyjsyYVMPNV8/FBXRIvXzQPl/t2NtQ9L0m3ug4kj3iET7dR9F2FXN5puG3ouceGTXlcIEUt7Y1qK78eCBoi4WIPRGVEcYCA+JYJBp95oQuJcH0WHGPLLuxycHPdjg+eWJr5FHdrvWmdqMTrsqxbqfLjwmQqDYVqA20neTecVOz3f2I0O6aBBucyKESh/wczGXGtMUkP+U0Fzb8lZ2tsDTqTuTfW4wEuSQvD/KGI/c3k4caG/o1jgMgSBMYQKis2emJNuSTNYQ6rxuLGfYJWnkRbWHSb3KbfESKHaL+X9xXvYJ91zwSDcFwNJKce6iRgrM8cK80rOAhOjLwDDTCLIpX2Oiok4cxyz9YxuEzrDQmUasV/gl/pyXtxBSAzi5vCkpTsfx2M4fqxnLfFGQeBYx9Cb9JclrILR1El22ylh01NrmEeDSE3LUNVJA2/reSm2AI74jXn12DfSRbn2pzd8G+pJIpDePlMiIXQhVoH68hqZWr7qE7yz/vB0S5v5AcWvqw0WlCRZz3J55u4Rf/2a72hHmFgwoYRyNU12VJowx15flL5spam0hawLDX46haY1qFUXpUnv2GtN+4s5cYNHATIA5Wt0XTJZ/bQ09TzKwCXwyu2y9GBTFSzrf+lLKvKhaH3Qdp28Jnh1M=
 
-  - stage: release
-    node_js: '10'
-    script: npx semantic-release
+    - stage: release
+      node_js: '10'
+      script: npx semantic-release
+      env:
+        # github
+        - secure: ru7bnMfsc/ta737UNHvN37YUwwfesuIfkDnFJIDIV8SJ02FnA3qanrjeIEebzidKEXnXPvGENHGqgULZIwZmmL0Q1Zx1hRIN0Y1+9of2gN/+29CiYfBb5WUIz7wcGAuejm7hmXnI3pXmN2p9+8QQtQ4Np7LqgvsGFbZfYlenJHS4PuUyh3kgnuF933KKphX5snE+/9x1q9daDikKIx0RfE7XW8pgJKa6S3uMvuk5VYOHt4YPP56rfn3HiA21HhXA0p9Afmi3vVyR4mVLM6+XiDrLpy6pm8XXUxTkgtszFf0rStSBtYs5NdEwyrwF7Be0amIOLKdGR8Mt3ojjPPHruvzM4bEbQ/ru73+Qwu0jeFpVEfRhPdOnpUOvGh3Ox1Jdj8GuJglIhkI6GhIWgsrrOwtvEEzNcmewIb5VjqCwxr5Rz7KVCXboSWQappiBlV9UT6DSH9O6NVpnbRLnwtxcxJS4mJO9SRDC8RdKr1Ie0b+1rWHeenMfZr5rQgbzLiKm8WfPZJ1E9YlV+Cy9sdqgfTOfjHODrTseKqnccgNMoWEjWijtIolwmr2BlRsVzLWP9hc+m6hQ5yuHwA1OogEy8qHNhAzjpoSq/MGYlz1Of27M0txwZG+ZtteGGJm3+BOLCOBzUTVcXDA6gU+k2L2e5ZpGVOLe6Dl0Yrd0s6N3sUk=
+        # npm
+        - secure: WCAuW9N2v00g/5JEltf6kUTMCly9MfEwgz91iI+09vLPiILTACfghFPMfytdM2nz0A7l4qKSwBOreNQMt2yC+Kb6S+PnlIq/7XfPgEIejDiqd49yQTlD9gJ5iuCF0X83hHnGIMzFD78rsq+Jl/riNwdDlNlc0WeCWd52w21ySU7AZ6LgatDzrnzXhx1PpZ/Lqf6wbtwGRA1rTAGVCZGKam/E+ePARozvaIoQXBVJ9BgThYtP1C+vRfaNKj+woV78huQw1jjQh9jciUIZm7ahCkHz8+uN4TCWc1VMFFWLOwOMgZ1rY8XFD63BKFe5jN7W1hy9E9BIe4ywcRAa9BWV62PtqWqr3AQ9g2iJ/xCEC2AFsINu13tzg/JwdCKv2xp0RR5LoJMmXMDXj9RBR2owaNjD2od1rsYC+tUE+NUyS2grlux9TDbuYmPFZMLVEHOmI4OPmJFVhBtObY2UC83D6mWtNP5UU+nWOFtWMkWa8iXT5wlbpBI1Z4JZX9I3DMrEXW6VUoPkANypkgWSLUEswSEWMZTYkz19IDqgYvZWwtwECIKHmSOnCtuWq9oqhzq7JgPSM9yyKgHoW1XWae9kc025yWdjJybpef4eIyYEDsj2Z444Ivx5+EMXuZ5z/OmG1bUFZQIAzIA/ddMESPnQGHedQ0pe3FgZKBgHf29ujNQ=
 stages:
-- prepare cache
-- audit
-- test
-- advanced tests
-- name: release
-  if: branch = master
-env:
-  global:
-  - secure: DVoPisdboLpckWWL6jgHiGlttrAMzGzyjsyYVMPNV8/FBXRIvXzQPl/t2NtQ9L0m3ug4kj3iET7dR9F2FXN5puG3ouceGTXlcIEUt7Y1qK78eCBoi4WIPRGVEcYCA+JYJBp95oQuJcH0WHGPLLuxycHPdjg+eWJr5FHdrvWmdqMTrsqxbqfLjwmQqDYVqA20neTecVOz3f2I0O6aBBucyKESh/wczGXGtMUkP+U0Fzb8lZ2tsDTqTuTfW4wEuSQvD/KGI/c3k4caG/o1jgMgSBMYQKis2emJNuSTNYQ6rxuLGfYJWnkRbWHSb3KbfESKHaL+X9xXvYJ91zwSDcFwNJKce6iRgrM8cK80rOAhOjLwDDTCLIpX2Oiok4cxyz9YxuEzrDQmUasV/gl/pyXtxBSAzi5vCkpTsfx2M4fqxnLfFGQeBYx9Cb9JclrILR1El22ylh01NrmEeDSE3LUNVJA2/reSm2AI74jXn12DfSRbn2pzd8G+pJIpDePlMiIXQhVoH68hqZWr7qE7yz/vB0S5v5AcWvqw0WlCRZz3J55u4Rf/2a72hHmFgwoYRyNU12VJowx15flL5spam0hawLDX46haY1qFUXpUnv2GtN+4s5cYNHATIA5Wt0XTJZ/bQ09TzKwCXwyu2y9GBTFSzrf+lLKvKhaH3Qdp28Jnh1M=
-  - secure: mLQFnU+g4m/C7cRm55GCXVyJSOrvR90tGR0m6bV+HSzkNA3nJ9Y9jmAS7sEck0zTK2d9Po/vWlY+9nPGxfa042648bmeeLHgRrrJ+XDrKlH1r7xj6XV9/JOIuDx2fEv0QQdz3PAAdThZil74TKFfbc30WwB7QFUimMx8Fyjvg2fW0tF6YxBBIjfBPPmizbc/+7vTPmrHWHFyTZG+vHLJ4vuFKQEFSA8gIA6XjRRFhNB7Cply3Vfsezol2sbSajErW1rBkj3l47HhXQvlRlfwbi6cPIpePkMGO4VTF9BQD6QNhq48M+Xih3LGnELR8+D44PS2SBsX/KBMjtWL8srtxF8jodSRg4Q5hmYz955yxr2faCGPVFOngOuqE3Wm0Dln/VHfCkMcBR92UmUA2KzOcguuq6S6hIGhtlU6Tlj0C8c11mdbJoXTVN6ULhLS1jKm+CRXH9uqRVYqpICMlpfwtrBCwQBeN/XMbw+oHgiBRsfBIN3V0BCjFpRsMOHI5YhNMksnARnwioWGPQZDpLqqQ1z5/rDG8e3tkpl/40VYTTRHeaiqR3cVsBgyPkUxnY1swvCBDYc6mKQFMaJDFUHhkKxsvgG5kGnMZsXPN/9KfMi1XuC9Im5cb2mDoroR7PkOo5OGuzUUuN4z02VBxAs9dJZ3Z80RgGnBMg09trlwDBA=
-  - secure: ru7bnMfsc/ta737UNHvN37YUwwfesuIfkDnFJIDIV8SJ02FnA3qanrjeIEebzidKEXnXPvGENHGqgULZIwZmmL0Q1Zx1hRIN0Y1+9of2gN/+29CiYfBb5WUIz7wcGAuejm7hmXnI3pXmN2p9+8QQtQ4Np7LqgvsGFbZfYlenJHS4PuUyh3kgnuF933KKphX5snE+/9x1q9daDikKIx0RfE7XW8pgJKa6S3uMvuk5VYOHt4YPP56rfn3HiA21HhXA0p9Afmi3vVyR4mVLM6+XiDrLpy6pm8XXUxTkgtszFf0rStSBtYs5NdEwyrwF7Be0amIOLKdGR8Mt3ojjPPHruvzM4bEbQ/ru73+Qwu0jeFpVEfRhPdOnpUOvGh3Ox1Jdj8GuJglIhkI6GhIWgsrrOwtvEEzNcmewIb5VjqCwxr5Rz7KVCXboSWQappiBlV9UT6DSH9O6NVpnbRLnwtxcxJS4mJO9SRDC8RdKr1Ie0b+1rWHeenMfZr5rQgbzLiKm8WfPZJ1E9YlV+Cy9sdqgfTOfjHODrTseKqnccgNMoWEjWijtIolwmr2BlRsVzLWP9hc+m6hQ5yuHwA1OogEy8qHNhAzjpoSq/MGYlz1Of27M0txwZG+ZtteGGJm3+BOLCOBzUTVcXDA6gU+k2L2e5ZpGVOLe6Dl0Yrd0s6N3sUk=
-  - secure: WCAuW9N2v00g/5JEltf6kUTMCly9MfEwgz91iI+09vLPiILTACfghFPMfytdM2nz0A7l4qKSwBOreNQMt2yC+Kb6S+PnlIq/7XfPgEIejDiqd49yQTlD9gJ5iuCF0X83hHnGIMzFD78rsq+Jl/riNwdDlNlc0WeCWd52w21ySU7AZ6LgatDzrnzXhx1PpZ/Lqf6wbtwGRA1rTAGVCZGKam/E+ePARozvaIoQXBVJ9BgThYtP1C+vRfaNKj+woV78huQw1jjQh9jciUIZm7ahCkHz8+uN4TCWc1VMFFWLOwOMgZ1rY8XFD63BKFe5jN7W1hy9E9BIe4ywcRAa9BWV62PtqWqr3AQ9g2iJ/xCEC2AFsINu13tzg/JwdCKv2xp0RR5LoJMmXMDXj9RBR2owaNjD2od1rsYC+tUE+NUyS2grlux9TDbuYmPFZMLVEHOmI4OPmJFVhBtObY2UC83D6mWtNP5UU+nWOFtWMkWa8iXT5wlbpBI1Z4JZX9I3DMrEXW6VUoPkANypkgWSLUEswSEWMZTYkz19IDqgYvZWwtwECIKHmSOnCtuWq9oqhzq7JgPSM9yyKgHoW1XWae9kc025yWdjJybpef4eIyYEDsj2Z444Ivx5+EMXuZ5z/OmG1bUFZQIAzIA/ddMESPnQGHedQ0pe3FgZKBgHf29ujNQ=
+  - prepare cache
+  - audit
+  - test
+  - advanced tests
+  - name: release
+    if: branch = master
