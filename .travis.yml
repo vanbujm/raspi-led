@@ -41,10 +41,7 @@ jobs:
 
   - stage: release
     node_js: '10'
-    deploy:
-      provider: script
-      skip_cleanup: true
-      script: yarn semantic-release
+    script: npx semantic-release
 stages:
 - prepare cache
 - audit

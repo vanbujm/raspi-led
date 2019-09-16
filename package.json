@@ -94,7 +94,6 @@
     "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
     "test:mutation": "stryker run",
     "lint": "eslint src/**/*.ts --fix",
-    "lint:ci": "eslint src/**/*.ts",
-    "semantic-release": "semantic-release"
+    "lint:ci": "eslint src/**/*.ts"
   }
 }
