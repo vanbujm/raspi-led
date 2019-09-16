@@ -9,8 +9,5 @@
       }
     ],
     "@babel/preset-typescript"
-  ],
-  "ignore": [
-    "**/*.test.ts"
   ]
 }

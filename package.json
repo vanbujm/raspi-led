@@ -89,7 +89,7 @@
     ]
   },
   "scripts": {
-    "build": "babel src --out-dir dist --extensions '.ts' --source-maps",
+    "build": "babel src --out-dir dist --extensions '.ts' --source-maps --ignore 'src/**/*.test.ts'",
     "test": "cross-env RASPI_IO_TEST_MODE=true jest --watchAll",
     "test:ci": "cross-env RASPI_IO_TEST_MODE=true jest --ci --coverage",
     "test:mutation": "stryker run",
