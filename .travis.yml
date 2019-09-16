@@ -4,7 +4,13 @@ jobs:
   include:
     - stage: prepare cache
       script: true
+      node_js: '12.9'
+    - stage: prepare cache
+      script: true
       node_js: '10'
+    - stage: prepare cache
+      script: true
+      node_js: '8'
 
     - stage: test
       script: yarn lint:ci && yarn test:ci
