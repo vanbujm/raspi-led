@@ -2,6 +2,7 @@ Raspi LED
 ==========
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nebrius/raspi-io?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![codecov](https://codecov.io/gh/vanbujm/raspi-led/branch/master/graph/badge.svg)](https://codecov.io/gh/vanbujm/raspi-led)
 
 Raspi LED is part of the [Raspi.js suite](https://github.com/nebrius/raspi) that provides access to the onboard status LED.
 
