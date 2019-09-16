@@ -1,10 +1,28 @@
 language: node_js
-node_js:
-  - '12.9'
-  - '10'
-  - '8'
 cache: yarn
-services:
-  - docker
-script:
-  - yarn lint:ci && yarn test:ci && ./bin/docker-test.sh
+jobs:
+  include:
+    - stage: prepare cache
+      script: true
+      node_js: '10'
+
+    - stage: lint
+      script: yarn lint:ci && yarn test:ci
+      node_js: '12.9'
+    - stage: lint
+      script: yarn lint:ci && yarn test:ci
+      node_js: '10'
+    - stage: lint
+      script: yarn lint:ci && yarn test:ci
+      node_js: '8'
+
+    - stage: test arm
+      node_js: '10'
+      services:
+        - docker
+      script:
+        - ./bin/docker-test.sh
+stages:
+  - prepare cache
+  - test
+  - test arm
