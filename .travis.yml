@@ -12,6 +12,10 @@ jobs:
       script: true
       node_js: '8'
 
+    - stage: audit
+      script: yarn audit
+      node_js: '10'
+
     - stage: test
       script: yarn lint:ci && yarn test:ci
       node_js: '12.9'
@@ -30,5 +34,6 @@ jobs:
         - ./bin/docker-test.sh
 stages:
   - prepare cache
+  - audit
   - test
   - test arm
