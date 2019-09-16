@@ -1,4 +1,5 @@
 ARG BALENA_IMG=balenalib/raspberrypi3-debian-node
+ARG YARN_CACHE_DIR
 FROM $BALENA_IMG
 RUN [ "cross-build-start" ]
 
@@ -8,7 +9,6 @@ COPY package.json ./package.json
 
 ENV YARN_CACHE_DIR $YARN_CACHE_DIR
 
-RUN echo $YARN_CACHE_DIR $BALENA_IMG
 COPY $YARN_CACHE_DIR /yarn-cache
 RUN yarn --cache-folder /yarn-cache
 
